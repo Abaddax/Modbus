@@ -1,1 +1,2 @@
-# ModbusTCP
+# Simple Modbus-TCP Master
+work in progress...
