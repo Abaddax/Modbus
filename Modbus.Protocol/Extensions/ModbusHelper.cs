@@ -177,7 +177,7 @@ namespace Modbus.Protocol.Extensions
         /// <summary>
         /// 4 byte -> 1 float
         /// </summary>
-        public static IEnumerable<float> ReadAsFloat(this byte[] data)
+        public static IEnumerable<float> ReadAsFloat(this IEnumerable<byte> data)
         {
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
@@ -200,7 +200,7 @@ namespace Modbus.Protocol.Extensions
         /// <summary>
         /// 8 byte -> 1 double
         /// </summary>
-        public static IEnumerable<double> ReadAsDouble(this byte[] data)
+        public static IEnumerable<double> ReadAsDouble(this IEnumerable<byte> data)
         {
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
