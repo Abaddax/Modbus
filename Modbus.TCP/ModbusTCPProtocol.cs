@@ -1,23 +1,20 @@
 ﻿using Abaddax.Utilities.Collections;
 using Abaddax.Utilities.IO;
-using Abaddax.Utilities.Threading.Tasks;
-using Modbus.Protocol;
 using Modbus.Protocol.Contracts;
 using Modbus.Protocol.Protocol;
 using Modbus.TCP.Internal;
 using System.Buffers.Binary;
-using System.Net.Sockets;
 
 namespace Modbus.TCP
 {
-    public class ModbusTCPProtocol : IModbusProtocol
+    public sealed class ModbusTcpProtocol : IModbusProtocol
     {
-        readonly ListenStream<ModbusTCPListenProtocol> _stream;
-        private bool disposedValue;
+        readonly Lazy<ListenStream<ModbusTcpListenProtocol>> _stream;
 
         readonly byte _unitIdentifier = 1;
         readonly DistinctDictionary<Guid, ushort> _transactionIDs = new();
 
+        bool disposedValue;
 
         private void RemoveTransaction(Guid id)
         {
@@ -49,7 +46,7 @@ namespace Modbus.TCP
             if (readException != null)
             {
                 //TODO
-                _stream.Close();
+                _stream.Value.Close();
                 return;
             }
 
@@ -102,18 +99,26 @@ namespace Modbus.TCP
             }
         }
 
-        public ModbusTCPProtocol(Stream stream)
+        internal ModbusTcpProtocol(Func<Stream> connectFunc)
         {
-            _stream = new ListenStream<ModbusTCPListenProtocol>(stream, new ModbusTCPListenProtocol());
+            ArgumentNullException.ThrowIfNull(connectFunc);
+
+            _stream = new(() =>
+            {
+                return new ListenStream<ModbusTcpListenProtocol>(connectFunc(), new ModbusTcpListenProtocol());
+            });
         }
 
         public async Task ConnectAsync(CancellationToken token)
         {
-            _stream.StartListening(OnModbusMessageReceived);
+            if (Connected)
+                return;
+
+            _stream.Value.StartListening(OnModbusMessageReceived);
         }
 
         public byte UnitIdentifier { get => _unitIdentifier; init => _unitIdentifier = value; }
-        public bool Connected => _stream.Listening;
+        public bool Connected => _stream.IsValueCreated ? _stream.Value.Listening : false;
 
         public event EventHandler<ModbusPDU> OnModbusPDUReceived;
 
@@ -121,6 +126,9 @@ namespace Modbus.TCP
         {
             ArgumentNullException.ThrowIfNull(pdu.Data);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(pdu.Data.Length, ushort.MaxValue - 2);
+
+            if (!Connected)
+                throw new InvalidOperationException("Not connected");
 
             bool isResponse = _transactionIDs.TryGetValue(pdu.ID, out var transactionId);
             try
@@ -145,7 +153,7 @@ namespace Modbus.TCP
 
                 pdu.Data.CopyTo(buffer.Slice(8));
 
-                await _stream.WriteAsync(buffer, token);
+                await _stream.Value.WriteAsync(buffer, token);
 
                 //Clear transaction
                 if (isResponse)
@@ -159,20 +167,22 @@ namespace Modbus.TCP
         }
 
         #region IDisposable
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!disposedValue)
             {
                 if (disposing)
                 {
-                    _stream.StopListening();
+                    if (_stream.IsValueCreated)
+                        _stream.Value.StopListening();
                     _transactionIDs.Clear();
                 }
-                _stream.Dispose();
+                if (_stream.IsValueCreated)
+                    _stream.Value.Dispose();
                 disposedValue = true;
             }
         }
-        ~ModbusTCPProtocol()
+        ~ModbusTcpProtocol()
         {
             Dispose(disposing: false);
         }
@@ -182,40 +192,5 @@ namespace Modbus.TCP
             GC.SuppressFinalize(this);
         }
         #endregion
-
-        #region Static
-        public static ModbusClient<ModbusTCPProtocol> CreateClient(string ip, int port)
-        {
-            var client = new TcpClient(ip, port);
-            return CreateClient(client);
-        }
-        public static ModbusClient<ModbusTCPProtocol> CreateClient(TcpClient client)
-        {
-            return CreateClient(client.GetStream());
-        }
-        public static ModbusClient<ModbusTCPProtocol> CreateClient(Stream stream)
-        {
-            var modbusClientProtocol = new ModbusTCPProtocol(stream);
-
-            modbusClientProtocol.ConnectAsync(default).AwaitSync();
-
-            return new ModbusClient<ModbusTCPProtocol>(modbusClientProtocol);
-        }
-
-        public static ModbusServer<ModbusTCPProtocol> CreateServer(TcpClient client, IModbusServerData serverData)
-        {
-            return CreateServer(client.GetStream(), serverData);
-
-        }
-        public static ModbusServer<ModbusTCPProtocol> CreateServer(Stream stream, IModbusServerData serverData)
-        {
-            using var modbusServerProtocol = new ModbusTCPProtocol(stream);
-
-            modbusServerProtocol.ConnectAsync(default).AwaitSync();
-
-            return new ModbusServer<ModbusTCPProtocol>(modbusServerProtocol, serverData);
-        }
-        #endregion
-
     }
 }

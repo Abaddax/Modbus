@@ -3,7 +3,7 @@ using System.Buffers.Binary;
 
 namespace Modbus.TCP.Internal
 {
-    internal class ModbusTCPListenProtocol : IStreamProtocol
+    internal sealed class ModbusTcpListenProtocol : IStreamProtocol
     {
         public int FixedHeaderSize => 6;
 

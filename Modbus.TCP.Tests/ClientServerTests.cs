@@ -1,4 +1,4 @@
-﻿using Modbus.Protocol;
+﻿using Modbus.Protocol.Builder.Extensions;
 using Modbus.Protocol.Tests.Helper;
 using System.Net;
 using System.Net.Sockets;
@@ -25,22 +25,20 @@ namespace Modbus.TCP.Tests
         [Test]
         public async Task ShouldReadCoils()
         {
-            var serverTask = _listener.AcceptTcpClientAsync();
-            using var client = new TcpClient("127.0.0.1", 502);
-            using var server = await serverTask;
-
-            using var modbusClientProtocol = new ModbusTCPProtocol(client.GetStream());
-            using var modbusServerProtocol = new ModbusTCPProtocol(server.GetStream());
-
-            using var modbusClient = new ModbusClient<ModbusTCPProtocol>(modbusClientProtocol);
-            using var modbusServer = new ModbusServer<ModbusTCPProtocol>(modbusServerProtocol,
-                new TestModbusServerData(
+            using var modbusClient = new ModbusTcpClientBuilder()
+                .WithServer("127.0.0.1", 502)
+                .Build();
+            using var modbusServer = new ModbusTcpServerBuilder()
+                .WithMaxServerConnections(1)
+                .WithTcpListener(_listener)
+                .WithServerData(new TestModbusServerData(
                     retreiveCoil: (address) =>
                     {
                         if (address == 0x1234)
                             return true;
                         return false;
-                    }));
+                    }))
+                .Build();
 
             await modbusServer.StartAsync();
             await modbusClient.ConnectAsync();
@@ -58,22 +56,20 @@ namespace Modbus.TCP.Tests
         [Test]
         public async Task ShouldReadDiscreteInputs()
         {
-            var serverTask = _listener.AcceptTcpClientAsync();
-            using var client = new TcpClient("127.0.0.1", 502);
-            using var server = await serverTask;
-
-            using var modbusClientProtocol = new ModbusTCPProtocol(client.GetStream());
-            using var modbusServerProtocol = new ModbusTCPProtocol(server.GetStream());
-
-            using var modbusClient = new ModbusClient<ModbusTCPProtocol>(modbusClientProtocol);
-            using var modbusServer = new ModbusServer<ModbusTCPProtocol>(modbusServerProtocol,
-                new TestModbusServerData(
+            using var modbusClient = new ModbusTcpClientBuilder()
+                 .WithServer("127.0.0.1", 502)
+                 .Build();
+            using var modbusServer = new ModbusTcpServerBuilder()
+                .WithMaxServerConnections(1)
+                .WithTcpListener(_listener)
+                .WithServerData(new TestModbusServerData(
                     retreiveDiscreteInput: (address) =>
                     {
                         if (address == 0x1234)
                             return true;
                         return false;
-                    }));
+                    }))
+                .Build();
 
             await modbusServer.StartAsync();
             await modbusClient.ConnectAsync();
@@ -91,20 +87,18 @@ namespace Modbus.TCP.Tests
         [Test]
         public async Task ShouldReadHoldingRegisters()
         {
-            var serverTask = _listener.AcceptTcpClientAsync();
-            using var client = new TcpClient("127.0.0.1", 502);
-            using var server = await serverTask;
-
-            using var modbusClientProtocol = new ModbusTCPProtocol(client.GetStream());
-            using var modbusServerProtocol = new ModbusTCPProtocol(server.GetStream());
-
-            using var modbusClient = new ModbusClient<ModbusTCPProtocol>(modbusClientProtocol);
-            using var modbusServer = new ModbusServer<ModbusTCPProtocol>(modbusServerProtocol,
-                new TestModbusServerData(
+            using var modbusClient = new ModbusTcpClientBuilder()
+                .WithServer("127.0.0.1", 502)
+                .Build();
+            using var modbusServer = new ModbusTcpServerBuilder()
+                .WithMaxServerConnections(1)
+                .WithTcpListener(_listener)
+                .WithServerData(new TestModbusServerData(
                     retreiveHoldingRegister: (address) =>
                     {
                         return (short)address;
-                    }));
+                    }))
+                .Build();
 
             await modbusServer.StartAsync();
             await modbusClient.ConnectAsync();
@@ -124,20 +118,18 @@ namespace Modbus.TCP.Tests
         [Test]
         public async Task ShouldReadInputRegisters()
         {
-            var serverTask = _listener.AcceptTcpClientAsync();
-            using var client = new TcpClient("127.0.0.1", 502);
-            using var server = await serverTask;
-
-            using var modbusClientProtocol = new ModbusTCPProtocol(client.GetStream());
-            using var modbusServerProtocol = new ModbusTCPProtocol(server.GetStream());
-
-            using var modbusClient = new ModbusClient<ModbusTCPProtocol>(modbusClientProtocol);
-            using var modbusServer = new ModbusServer<ModbusTCPProtocol>(modbusServerProtocol,
-                new TestModbusServerData(
+            using var modbusClient = new ModbusTcpClientBuilder()
+                .WithServer("127.0.0.1", 502)
+                .Build();
+            using var modbusServer = new ModbusTcpServerBuilder()
+                .WithMaxServerConnections(1)
+                .WithTcpListener(_listener)
+                .WithServerData(new TestModbusServerData(
                     retreiveInputRegister: (address) =>
                     {
                         return (short)address;
-                    }));
+                    }))
+                .Build();
 
             await modbusServer.StartAsync();
             await modbusClient.ConnectAsync();
@@ -158,21 +150,20 @@ namespace Modbus.TCP.Tests
         [Test]
         public async Task ShouldWriteSingleCoil()
         {
-            var serverTask = _listener.AcceptTcpClientAsync();
-            using var client = new TcpClient("127.0.0.1", 502);
-            using var server = await serverTask;
-
-            using var modbusClientProtocol = new ModbusTCPProtocol(client.GetStream());
-            using var modbusServerProtocol = new ModbusTCPProtocol(server.GetStream());
-
             Dictionary<ushort, bool> values = new();
-            using var modbusClient = new ModbusClient<ModbusTCPProtocol>(modbusClientProtocol);
-            using var modbusServer = new ModbusServer<ModbusTCPProtocol>(modbusServerProtocol,
-                new TestModbusServerData(
+
+            using var modbusClient = new ModbusTcpClientBuilder()
+               .WithServer("127.0.0.1", 502)
+               .Build();
+            using var modbusServer = new ModbusTcpServerBuilder()
+                .WithMaxServerConnections(1)
+                .WithTcpListener(_listener)
+                .WithServerData(new TestModbusServerData(
                     storeCoil: (address, value) =>
                     {
                         values[address] = value;
-                    }));
+                    }))
+                .Build();
 
             await modbusServer.StartAsync();
             await modbusClient.ConnectAsync();
@@ -187,21 +178,20 @@ namespace Modbus.TCP.Tests
         [Test]
         public async Task ShouldWriteSingleRegister()
         {
-            var serverTask = _listener.AcceptTcpClientAsync();
-            using var client = new TcpClient("127.0.0.1", 502);
-            using var server = await serverTask;
-
-            using var modbusClientProtocol = new ModbusTCPProtocol(client.GetStream());
-            using var modbusServerProtocol = new ModbusTCPProtocol(server.GetStream());
-
             Dictionary<ushort, short> values = new();
-            using var modbusClient = new ModbusClient<ModbusTCPProtocol>(modbusClientProtocol);
-            using var modbusServer = new ModbusServer<ModbusTCPProtocol>(modbusServerProtocol,
-                new TestModbusServerData(
+
+            using var modbusClient = new ModbusTcpClientBuilder()
+               .WithServer("127.0.0.1", 502)
+               .Build();
+            using var modbusServer = new ModbusTcpServerBuilder()
+                .WithMaxServerConnections(1)
+                .WithTcpListener(_listener)
+                .WithServerData(new TestModbusServerData(
                     storeHoldingRegister: (address, value) =>
                     {
                         values[address] = value;
-                    }));
+                    }))
+                .Build();
 
             await modbusServer.StartAsync();
             await modbusClient.ConnectAsync();
@@ -217,21 +207,20 @@ namespace Modbus.TCP.Tests
         [Test]
         public async Task ShouldWriteMultipleCoils()
         {
-            var serverTask = _listener.AcceptTcpClientAsync();
-            using var client = new TcpClient("127.0.0.1", 502);
-            using var server = await serverTask;
-
-            using var modbusClientProtocol = new ModbusTCPProtocol(client.GetStream());
-            using var modbusServerProtocol = new ModbusTCPProtocol(server.GetStream());
-
             Dictionary<ushort, bool> values = new();
-            using var modbusClient = new ModbusClient<ModbusTCPProtocol>(modbusClientProtocol);
-            using var modbusServer = new ModbusServer<ModbusTCPProtocol>(modbusServerProtocol,
-                new TestModbusServerData(
+
+            using var modbusClient = new ModbusTcpClientBuilder()
+                .WithServer("127.0.0.1", 502)
+                .Build();
+            using var modbusServer = new ModbusTcpServerBuilder()
+                .WithMaxServerConnections(1)
+                .WithTcpListener(_listener)
+                .WithServerData(new TestModbusServerData(
                     storeCoil: (address, value) =>
                     {
                         values[address] = value;
-                    }));
+                    }))
+                .Build();
 
             await modbusServer.StartAsync();
             await modbusClient.ConnectAsync();
@@ -249,21 +238,20 @@ namespace Modbus.TCP.Tests
         [Test]
         public async Task ShouldWriteMultipleRegisters()
         {
-            var serverTask = _listener.AcceptTcpClientAsync();
-            using var client = new TcpClient("127.0.0.1", 502);
-            using var server = await serverTask;
-
-            using var modbusClientProtocol = new ModbusTCPProtocol(client.GetStream());
-            using var modbusServerProtocol = new ModbusTCPProtocol(server.GetStream());
-
             Dictionary<ushort, short> values = new();
-            using var modbusClient = new ModbusClient<ModbusTCPProtocol>(modbusClientProtocol);
-            using var modbusServer = new ModbusServer<ModbusTCPProtocol>(modbusServerProtocol,
-                new TestModbusServerData(
+
+            using var modbusClient = new ModbusTcpClientBuilder()
+               .WithServer("127.0.0.1", 502)
+               .Build();
+            using var modbusServer = new ModbusTcpServerBuilder()
+                .WithMaxServerConnections(1)
+                .WithTcpListener(_listener)
+                .WithServerData(new TestModbusServerData(
                     storeHoldingRegister: (address, value) =>
                     {
                         values[address] = value;
-                    }));
+                    }))
+                .Build();
 
             await modbusServer.StartAsync();
             await modbusClient.ConnectAsync();
