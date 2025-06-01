@@ -1,6 +1,6 @@
-﻿using Modbus.Protocol.Protocol;
+﻿using Abaddax.Modbus.Protocol.Protocol;
 
-namespace Modbus.Protocol.Contracts
+namespace Abaddax.Modbus.Protocol.Contracts
 {
     public interface IModbusProtocol : IDisposable
     {

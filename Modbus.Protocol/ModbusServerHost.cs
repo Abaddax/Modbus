@@ -1,7 +1,7 @@
-﻿using Abaddax.Utilities.Threading.Tasks;
-using Modbus.Protocol.Contracts;
+﻿using Abaddax.Modbus.Protocol.Contracts;
+using Abaddax.Utilities.Threading.Tasks;
 
-namespace Modbus.Protocol
+namespace Abaddax.Modbus.Protocol
 {
     public abstract class ModbusServerHost<TModbusProtocol> : IDisposable where TModbusProtocol : IModbusProtocol
     {

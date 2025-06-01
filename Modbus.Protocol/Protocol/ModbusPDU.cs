@@ -1,4 +1,4 @@
-﻿namespace Modbus.Protocol.Protocol
+﻿namespace Abaddax.Modbus.Protocol.Protocol
 {
     public record struct ModbusPDU
     {

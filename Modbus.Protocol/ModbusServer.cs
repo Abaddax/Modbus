@@ -1,10 +1,10 @@
-﻿using Abaddax.Utilities.Threading.Tasks;
-using Modbus.Protocol.Contracts;
-using Modbus.Protocol.Extensions;
-using Modbus.Protocol.Protocol;
+﻿using Abaddax.Modbus.Protocol.Contracts;
+using Abaddax.Modbus.Protocol.Extensions;
+using Abaddax.Modbus.Protocol.Protocol;
+using Abaddax.Utilities.Threading.Tasks;
 using System.Buffers.Binary;
 
-namespace Modbus.Protocol
+namespace Abaddax.Modbus.Protocol
 {
     public sealed class ModbusServer<TModbusProtocol> : IDisposable where TModbusProtocol : IModbusProtocol
     {

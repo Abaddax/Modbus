@@ -1,6 +1,6 @@
-﻿using Modbus.Protocol.Contracts;
+﻿using Abaddax.Modbus.Protocol.Contracts;
 
-namespace Modbus.Protocol.Builder.Extensions
+namespace Abaddax.Modbus.Protocol.Builder.Extensions
 {
     public static class ModbusServerOptionsExtensions
     {

@@ -1,6 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <RootNamespace>Abaddax.$(MSBuildProjectName)</RootNamespace>
+    <AssemblyName>Abaddax.$(MSBuildProjectName)</AssemblyName>
+    <PackageId>Abaddax.$(MSBuildProjectName)</PackageId>
+  </PropertyGroup>
+    
+  <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -20,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Modbus.Protocol.Tests\Modbus.Protocol.Tests.csproj" />
-    <ProjectReference Include="..\Modbus.Protocol\Modbus.Protocol.csproj" />
     <ProjectReference Include="..\Modbus.TCP\Modbus.TCP.csproj" />
   </ItemGroup>
 

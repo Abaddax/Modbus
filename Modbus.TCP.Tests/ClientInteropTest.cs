@@ -1,4 +1,4 @@
-﻿namespace Modbus.TCP.Tests
+﻿namespace Abaddax.Modbus.TCP.Tests
 {
     public class ClientInteropTest
     {

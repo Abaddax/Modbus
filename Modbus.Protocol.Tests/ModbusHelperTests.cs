@@ -1,6 +1,6 @@
-﻿using Modbus.Protocol.Extensions;
+﻿using Abaddax.Modbus.Protocol.Extensions;
 
-namespace Modbus.Protocol.Tests
+namespace Abaddax.Modbus.Protocol.Tests
 {
     public class ModbusHelperTests
     {

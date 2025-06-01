@@ -1,4 +1,4 @@
-﻿namespace Modbus.Protocol.Contracts
+﻿namespace Abaddax.Modbus.Protocol.Contracts
 {
     public interface IModbusServerData
     {

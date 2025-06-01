@@ -1,6 +1,6 @@
-﻿using Modbus.Protocol.Contracts;
+﻿using Abaddax.Modbus.Protocol.Contracts;
 
-namespace Modbus.Protocol.Builder
+namespace Abaddax.Modbus.Protocol.Builder
 {
     public abstract class ModbusServerBuilder<TModbusProtocol> : ModbusServerOptions where TModbusProtocol : IModbusProtocol
     {

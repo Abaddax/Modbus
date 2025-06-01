@@ -1,8 +1,8 @@
-﻿using Modbus.Protocol;
-using Modbus.Protocol.Builder;
+﻿using Abaddax.Modbus.Protocol;
+using Abaddax.Modbus.Protocol.Builder;
 using System.Net.Sockets;
 
-namespace Modbus.TCP
+namespace Abaddax.Modbus.TCP
 {
     public sealed class ModbusTcpClientBuilder : ModbusClientBuilder<ModbusTcpProtocol>
     {

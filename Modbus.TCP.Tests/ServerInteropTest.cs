@@ -1,9 +1,9 @@
-﻿using Modbus.Protocol.Builder.Extensions;
-using Modbus.Protocol.Tests.Helper;
+﻿using Abaddax.Modbus.Protocol.Builder.Extensions;
+using Abaddax.Modbus.Protocol.Tests.Helper;
 using System.Net;
 using System.Net.Sockets;
 
-namespace Modbus.TCP.Tests
+namespace Abaddax.Modbus.TCP.Tests
 {
     public class ServerInteropTest
     {

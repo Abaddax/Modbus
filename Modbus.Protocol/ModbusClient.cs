@@ -1,10 +1,10 @@
-﻿using Modbus.Protocol.Contracts;
-using Modbus.Protocol.Extensions;
-using Modbus.Protocol.Protocol;
+﻿using Abaddax.Modbus.Protocol.Contracts;
+using Abaddax.Modbus.Protocol.Extensions;
+using Abaddax.Modbus.Protocol.Protocol;
 using System.Buffers.Binary;
 using System.Collections.Concurrent;
 
-namespace Modbus.Protocol
+namespace Abaddax.Modbus.Protocol
 {
     public sealed class ModbusClient<TModbusProtocol> : IDisposable where TModbusProtocol : IModbusProtocol
     {

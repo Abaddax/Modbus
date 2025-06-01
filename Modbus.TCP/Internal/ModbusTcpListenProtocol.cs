@@ -1,7 +1,7 @@
 ﻿using Abaddax.Utilities.IO;
 using System.Buffers.Binary;
 
-namespace Modbus.TCP.Internal
+namespace Abaddax.Modbus.TCP.Internal
 {
     internal sealed class ModbusTcpListenProtocol : IStreamProtocol
     {

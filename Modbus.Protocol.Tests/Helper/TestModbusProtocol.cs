@@ -1,7 +1,7 @@
-﻿using Modbus.Protocol.Contracts;
-using Modbus.Protocol.Protocol;
+﻿using Abaddax.Modbus.Protocol.Contracts;
+using Abaddax.Modbus.Protocol.Protocol;
 
-namespace Modbus.Protocol.Tests.Helper
+namespace Abaddax.Modbus.Protocol.Tests.Helper
 {
     public class TestModbusProtocol : IModbusProtocol
     {

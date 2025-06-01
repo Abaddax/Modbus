@@ -1,11 +1,11 @@
-﻿using Abaddax.Utilities.Collections;
+﻿using Abaddax.Modbus.Protocol.Contracts;
+using Abaddax.Modbus.Protocol.Protocol;
+using Abaddax.Modbus.TCP.Internal;
+using Abaddax.Utilities.Collections;
 using Abaddax.Utilities.IO;
-using Modbus.Protocol.Contracts;
-using Modbus.Protocol.Protocol;
-using Modbus.TCP.Internal;
 using System.Buffers.Binary;
 
-namespace Modbus.TCP
+namespace Abaddax.Modbus.TCP
 {
     public sealed class ModbusTcpProtocol : IModbusProtocol
     {

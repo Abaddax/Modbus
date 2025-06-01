@@ -1,7 +1,7 @@
-﻿using Modbus.Protocol.Protocol;
-using Modbus.Protocol.Tests.Helper;
+﻿using Abaddax.Modbus.Protocol.Protocol;
+using Abaddax.Modbus.Protocol.Tests.Helper;
 
-namespace Modbus.Protocol.Tests
+namespace Abaddax.Modbus.Protocol.Tests
 {
     public class ClientServerTests
     {

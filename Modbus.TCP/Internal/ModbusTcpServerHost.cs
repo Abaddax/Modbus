@@ -1,9 +1,9 @@
-﻿using Abaddax.Utilities.Network;
-using Modbus.Protocol;
-using Modbus.Protocol.Contracts;
+﻿using Abaddax.Modbus.Protocol;
+using Abaddax.Modbus.Protocol.Contracts;
+using Abaddax.Utilities.Network;
 using System.Net.Sockets;
 
-namespace Modbus.TCP.Internal
+namespace Abaddax.Modbus.TCP.Internal
 {
     internal sealed class ModbusTcpServerHost : ModbusServerHost<ModbusTcpProtocol>
     {

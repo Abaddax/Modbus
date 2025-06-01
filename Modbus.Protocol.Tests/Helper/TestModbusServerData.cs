@@ -1,6 +1,6 @@
-﻿using Modbus.Protocol.Contracts;
+﻿using Abaddax.Modbus.Protocol.Contracts;
 
-namespace Modbus.Protocol.Tests.Helper
+namespace Abaddax.Modbus.Protocol.Tests.Helper
 {
     public class TestModbusServerData : IModbusServerData
     {

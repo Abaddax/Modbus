@@ -1,4 +1,4 @@
-﻿namespace Modbus.Protocol.Builder
+﻿namespace Abaddax.Modbus.Protocol.Builder
 {
     public abstract class ModbusClientOptions
     {

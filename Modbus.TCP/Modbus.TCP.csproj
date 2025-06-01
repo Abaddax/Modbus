@@ -1,13 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <RootNamespace>Abaddax.$(MSBuildProjectName)</RootNamespace>
+    <AssemblyName>Abaddax.$(MSBuildProjectName)</AssemblyName> 
+    <PackageId>Abaddax.$(MSBuildProjectName)</PackageId>
+    <Version>0.1.0</Version>
+    <Description>Simple Modbus-TCP-Client/Server witten in C#</Description>
+    <Authors>Abaddax</Authors>
+    <Company></Company>
+    <Copyright>Abaddax</Copyright>
+    <RepositoryUrl>https://github.com/Abaddax/Modbus</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseUrl>$(RepositoryUrl)/blob/master/LICENSE</PackageLicenseUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+    
+  <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <!--TEMP-->
   <ItemGroup>
     <ProjectReference Include="..\Modbus.Protocol\Modbus.Protocol.csproj" />
   </ItemGroup>
+  <!-- Use project reference in debug 
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <ProjectReference Include="..\Modbus.Protocol\Modbus.Protocol.csproj" />
+  </ItemGroup>
+  But package reference in release
+  <ItemGroup Condition="'$(Configuration)' == 'Release'">
+    <PackageReference Include="Abaddax.Modbus.Protocol" Version="0.1.0" />
+  </ItemGroup>-->
 
 </Project>

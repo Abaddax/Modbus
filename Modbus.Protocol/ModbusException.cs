@@ -1,6 +1,6 @@
-﻿using Modbus.Protocol.Protocol;
+﻿using Abaddax.Modbus.Protocol.Protocol;
 
-namespace Modbus.Protocol
+namespace Abaddax.Modbus.Protocol
 {
     public class ModbusException : Exception
     {

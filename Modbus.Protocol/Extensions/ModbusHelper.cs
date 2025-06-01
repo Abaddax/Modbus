@@ -1,6 +1,6 @@
 ﻿using System.Buffers.Binary;
 
-namespace Modbus.Protocol.Extensions
+namespace Abaddax.Modbus.Protocol.Extensions
 {
     public static class ModbusHelper
     {
