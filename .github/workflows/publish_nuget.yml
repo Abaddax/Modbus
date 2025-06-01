@@ -23,17 +23,12 @@ on:
       CSPROJ_PATH:
         description: 'Path to the .csproj that should be published'
         required: true
-        type: choise
-        options:
-          - Modbus.Protocol/Modbus.Protocol.csproj
-          - Modbus.TCP/Modbus.TCP.csproj
+        type: string
       TAG_PREFIX:
         description: 'Prefix for the Tag: {Prefix}{Version} (v1.2.3)'
-        required: true
-        type: choise
-        options: 
-          - Protocol v
-          - Modbus.TCP v
+        default: 'v'
+        required: false
+        type: string
 
 jobs:
   
@@ -97,6 +92,6 @@ jobs:
          else
             git config --local user.email "${{ github.actor }}"
             git config --local user.name "${{ github.actor }}@users.noreply.github.com"
-            git tag $TAG
+            git tag "$TAG"
             git push origin "$TAG"
          fi
