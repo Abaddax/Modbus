@@ -6,6 +6,8 @@ name: Publish Modbus.Protocol
 on:
   push:
     branches: [ "master" ]
+    paths:
+      - "**/*.csproj"
 
 env:
   CSPROJ_PATH: Modbus.Protocol/Modbus.Protocol.csproj
