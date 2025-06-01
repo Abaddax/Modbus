@@ -7,12 +7,14 @@ namespace Abaddax.Modbus.TCP.Tests
 {
     public class ClientServerTests
     {
+        const int _port = 10502;
+
         TcpListener _listener;
 
         [SetUp]
         public void Setup()
         {
-            _listener = new TcpListener(IPAddress.Loopback, 502);
+            _listener = new TcpListener(IPAddress.Loopback, _port);
             _listener.Start();
         }
 
@@ -26,7 +28,7 @@ namespace Abaddax.Modbus.TCP.Tests
         public async Task ShouldReadCoils()
         {
             using var modbusClient = new ModbusTcpClientBuilder()
-                .WithServer("127.0.0.1", 502)
+                .WithServer("127.0.0.1", _port)
                 .Build();
             using var modbusServer = new ModbusTcpServerBuilder()
                 .WithMaxServerConnections(1)
@@ -57,7 +59,7 @@ namespace Abaddax.Modbus.TCP.Tests
         public async Task ShouldReadDiscreteInputs()
         {
             using var modbusClient = new ModbusTcpClientBuilder()
-                 .WithServer("127.0.0.1", 502)
+                 .WithServer("127.0.0.1", _port)
                  .Build();
             using var modbusServer = new ModbusTcpServerBuilder()
                 .WithMaxServerConnections(1)
@@ -88,7 +90,7 @@ namespace Abaddax.Modbus.TCP.Tests
         public async Task ShouldReadHoldingRegisters()
         {
             using var modbusClient = new ModbusTcpClientBuilder()
-                .WithServer("127.0.0.1", 502)
+                .WithServer("127.0.0.1", _port)
                 .Build();
             using var modbusServer = new ModbusTcpServerBuilder()
                 .WithMaxServerConnections(1)
@@ -119,7 +121,7 @@ namespace Abaddax.Modbus.TCP.Tests
         public async Task ShouldReadInputRegisters()
         {
             using var modbusClient = new ModbusTcpClientBuilder()
-                .WithServer("127.0.0.1", 502)
+                .WithServer("127.0.0.1", _port)
                 .Build();
             using var modbusServer = new ModbusTcpServerBuilder()
                 .WithMaxServerConnections(1)
@@ -153,7 +155,7 @@ namespace Abaddax.Modbus.TCP.Tests
             Dictionary<ushort, bool> values = new();
 
             using var modbusClient = new ModbusTcpClientBuilder()
-               .WithServer("127.0.0.1", 502)
+               .WithServer("127.0.0.1", _port)
                .Build();
             using var modbusServer = new ModbusTcpServerBuilder()
                 .WithMaxServerConnections(1)
@@ -181,7 +183,7 @@ namespace Abaddax.Modbus.TCP.Tests
             Dictionary<ushort, short> values = new();
 
             using var modbusClient = new ModbusTcpClientBuilder()
-               .WithServer("127.0.0.1", 502)
+               .WithServer("127.0.0.1", _port)
                .Build();
             using var modbusServer = new ModbusTcpServerBuilder()
                 .WithMaxServerConnections(1)
@@ -210,7 +212,7 @@ namespace Abaddax.Modbus.TCP.Tests
             Dictionary<ushort, bool> values = new();
 
             using var modbusClient = new ModbusTcpClientBuilder()
-                .WithServer("127.0.0.1", 502)
+                .WithServer("127.0.0.1", _port)
                 .Build();
             using var modbusServer = new ModbusTcpServerBuilder()
                 .WithMaxServerConnections(1)
@@ -241,7 +243,7 @@ namespace Abaddax.Modbus.TCP.Tests
             Dictionary<ushort, short> values = new();
 
             using var modbusClient = new ModbusTcpClientBuilder()
-               .WithServer("127.0.0.1", 502)
+               .WithServer("127.0.0.1", _port)
                .Build();
             using var modbusServer = new ModbusTcpServerBuilder()
                 .WithMaxServerConnections(1)

@@ -2,6 +2,8 @@
 {
     public class ClientInteropTest
     {
+        const int _port = 10502;
+
         EasyModbus.ModbusServer _server;
 
         [SetUp]
@@ -9,7 +11,8 @@
         {
             _server = new EasyModbus.ModbusServer()
             {
-                LocalIPAddress = System.Net.IPAddress.Loopback
+                LocalIPAddress = System.Net.IPAddress.Loopback,
+                Port = _port
             };
             _server.Listen();
         }
@@ -24,7 +27,7 @@
         public async Task ShouldReadCoils()
         {
             using var modbusClient = new ModbusTcpClientBuilder()
-                .WithServer("127.0.0.1", 502)
+                .WithServer("127.0.0.1", _port)
                 .Build();
 
             await modbusClient.ConnectAsync();
@@ -48,7 +51,7 @@
         public async Task ShouldReadDiscreteInputs()
         {
             using var modbusClient = new ModbusTcpClientBuilder()
-              .WithServer("127.0.0.1", 502)
+              .WithServer("127.0.0.1", _port)
               .Build();
 
             await modbusClient.ConnectAsync();
@@ -72,7 +75,7 @@
         public async Task ShouldReadHoldingRegisters()
         {
             using var modbusClient = new ModbusTcpClientBuilder()
-               .WithServer("127.0.0.1", 502)
+               .WithServer("127.0.0.1", _port)
                .Build();
 
             await modbusClient.ConnectAsync();
@@ -100,7 +103,7 @@
         public async Task ShouldReadInputRegisters()
         {
             using var modbusClient = new ModbusTcpClientBuilder()
-              .WithServer("127.0.0.1", 502)
+              .WithServer("127.0.0.1", _port)
               .Build();
 
             await modbusClient.ConnectAsync();
@@ -129,7 +132,7 @@
         public async Task ShouldWriteSingleCoil()
         {
             using var modbusClient = new ModbusTcpClientBuilder()
-              .WithServer("127.0.0.1", 502)
+              .WithServer("127.0.0.1", _port)
               .Build();
 
             await modbusClient.ConnectAsync();
@@ -146,7 +149,7 @@
         public async Task ShouldWriteSingleRegister()
         {
             using var modbusClient = new ModbusTcpClientBuilder()
-               .WithServer("127.0.0.1", 502)
+               .WithServer("127.0.0.1", _port)
                .Build();
 
             await modbusClient.ConnectAsync();
@@ -161,7 +164,7 @@
         public async Task ShouldWriteMultipleCoils()
         {
             using var modbusClient = new ModbusTcpClientBuilder()
-              .WithServer("127.0.0.1", 502)
+              .WithServer("127.0.0.1", _port)
               .Build();
 
             await modbusClient.ConnectAsync();
@@ -179,7 +182,7 @@
         public async Task ShouldWriteMultipleRegisters()
         {
             using var modbusClient = new ModbusTcpClientBuilder()
-              .WithServer("127.0.0.1", 502)
+              .WithServer("127.0.0.1", _port)
               .Build();
 
             await modbusClient.ConnectAsync();

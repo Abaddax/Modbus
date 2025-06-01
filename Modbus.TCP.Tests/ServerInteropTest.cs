@@ -7,14 +7,16 @@ namespace Abaddax.Modbus.TCP.Tests
 {
     public class ServerInteropTest
     {
+        const int _port = 10502;
+
         TcpListener _listener;
         EasyModbus.ModbusClient _client;
 
         [SetUp]
         public void Setup()
         {
-            _client = new EasyModbus.ModbusClient("127.0.0.1", 502);
-            _listener = new TcpListener(IPAddress.Loopback, 502);
+            _client = new EasyModbus.ModbusClient("127.0.0.1", _port);
+            _listener = new TcpListener(IPAddress.Loopback, _port);
             _listener.Start();
         }
 
