@@ -7,7 +7,10 @@
         [SetUp]
         public void Setup()
         {
-            _server = new EasyModbus.ModbusServer();
+            _server = new EasyModbus.ModbusServer()
+            {
+                LocalIPAddress = System.Net.IPAddress.Loopback
+            };
             _server.Listen();
         }
 
