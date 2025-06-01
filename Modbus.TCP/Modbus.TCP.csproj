@@ -24,17 +24,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <!--TEMP-->
   <ItemGroup>
     <ProjectReference Include="..\Modbus.Protocol\Modbus.Protocol.csproj" />
   </ItemGroup>
-  <!-- Use project reference in debug 
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <ProjectReference Include="..\Modbus.Protocol\Modbus.Protocol.csproj" />
-  </ItemGroup>
-  But package reference in release
-  <ItemGroup Condition="'$(Configuration)' == 'Release'">
-    <PackageReference Include="Abaddax.Modbus.Protocol" Version="0.1.0" />
-  </ItemGroup>-->
 
 </Project>

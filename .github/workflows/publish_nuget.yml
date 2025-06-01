@@ -81,7 +81,7 @@ jobs:
       run: |
         PACKAGE_ID="${{steps.extract_nuget_info.outputs.package_id}}"
         VERSION=$"${{steps.extract_nuget_info.outputs.version}}"
-        dotnet nuget push ${{ github.workspace }}/.nupkg/$PACKAGE_ID.$VERSION.nupkg --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY
+        dotnet nuget push ${{ github.workspace }}/.nupkg/$PACKAGE_ID.$VERSION.nupkg --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY --skip-duplicate
     - name: Create version tag
       run: |
          VERSION=$"${{steps.extract_nuget_info.outputs.version}}"

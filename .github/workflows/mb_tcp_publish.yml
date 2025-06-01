@@ -51,7 +51,7 @@ jobs:
     uses: ./.github/workflows/publish_nuget.yml
     with:
       CSPROJ_PATH: ${{ needs.check_version.outputs.CSPROJ_PATH }}
-      TAG_PREFIX: Modbus.TCP v
+      TAG_PREFIX: Modbus.TCP-v
     permissions:
       contents: write
     secrets:
