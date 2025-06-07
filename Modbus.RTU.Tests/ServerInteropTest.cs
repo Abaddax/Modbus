@@ -27,7 +27,7 @@ namespace Abaddax.Modbus.RTU.Tests
         {
             using var modbusServer = new ModbusRtuServerBuilder()
                 .WithMaxServerConnections(1)
-                .WithSerialPort(SerialPortMock.SERVER_PORT)
+                .WithPortName(SerialPortMock.SERVER_PORT)
                 .WithServerData(new TestModbusServerData(
                     retreiveCoil: (address) =>
                     {
@@ -63,7 +63,7 @@ namespace Abaddax.Modbus.RTU.Tests
         {
             using var modbusServer = new ModbusRtuServerBuilder()
                 .WithMaxServerConnections(1)
-                .WithSerialPort(SerialPortMock.SERVER_PORT)
+                .WithPortName(SerialPortMock.SERVER_PORT)
                 .WithServerData(new TestModbusServerData(
                     retreiveDiscreteInput: (address) =>
                     {
@@ -99,7 +99,7 @@ namespace Abaddax.Modbus.RTU.Tests
         {
             using var modbusServer = new ModbusRtuServerBuilder()
                 .WithMaxServerConnections(1)
-                .WithSerialPort(SerialPortMock.SERVER_PORT)
+                .WithPortName(SerialPortMock.SERVER_PORT)
                 .WithServerData(new TestModbusServerData(
                     retreiveHoldingRegister: (address) =>
                     {
@@ -135,7 +135,7 @@ namespace Abaddax.Modbus.RTU.Tests
         {
             using var modbusServer = new ModbusRtuServerBuilder()
                 .WithMaxServerConnections(1)
-                .WithSerialPort(SerialPortMock.SERVER_PORT)
+                .WithPortName(SerialPortMock.SERVER_PORT)
                 .WithServerData(new TestModbusServerData(
                     retreiveInputRegister: (address) =>
                     {
@@ -173,7 +173,7 @@ namespace Abaddax.Modbus.RTU.Tests
             Dictionary<ushort, bool> values = new();
             using var modbusServer = new ModbusRtuServerBuilder()
                .WithMaxServerConnections(1)
-               .WithSerialPort(SerialPortMock.SERVER_PORT)
+               .WithPortName(SerialPortMock.SERVER_PORT)
                .WithServerData(new TestModbusServerData(
                     storeCoil: (address, value) =>
                     {
@@ -205,7 +205,7 @@ namespace Abaddax.Modbus.RTU.Tests
             Dictionary<ushort, short> values = new();
             using var modbusServer = new ModbusRtuServerBuilder()
                .WithMaxServerConnections(1)
-               .WithSerialPort(SerialPortMock.SERVER_PORT)
+               .WithPortName(SerialPortMock.SERVER_PORT)
                .WithServerData(new TestModbusServerData(
                     storeHoldingRegister: (address, value) =>
                     {
@@ -238,7 +238,7 @@ namespace Abaddax.Modbus.RTU.Tests
             Dictionary<ushort, bool> values = new();
             using var modbusServer = new ModbusRtuServerBuilder()
                 .WithMaxServerConnections(1)
-                .WithSerialPort(SerialPortMock.SERVER_PORT)
+                .WithPortName(SerialPortMock.SERVER_PORT)
                 .WithServerData(new TestModbusServerData(
                     storeCoil: (address, value) =>
                     {
@@ -274,7 +274,7 @@ namespace Abaddax.Modbus.RTU.Tests
 
             using var modbusServer = new ModbusRtuServerBuilder()
                .WithMaxServerConnections(1)
-               .WithSerialPort(SerialPortMock.SERVER_PORT)
+               .WithPortName(SerialPortMock.SERVER_PORT)
                .WithServerData(new TestModbusServerData(
                     storeHoldingRegister: (address, value) =>
                     {

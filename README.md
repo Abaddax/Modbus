@@ -1,6 +1,6 @@
-# Modbus TCP Client/Server 
+# Modbus TCP/RTU Client/Server 
 
-A basic implementation of Modbus TCP client/server library written fully in C#.
+A basic implementation of Modbus TCP/RTU client/server library written in C#.
 
 # Supported Function Codes
 
@@ -15,9 +15,11 @@ A basic implementation of Modbus TCP client/server library written fully in C#.
 
 # Usage
 
-## Client
+## Modbus TCP
 
-```
+### Client
+
+```csharp
 using var modbusClient = new ModbusTcpClientBuilder()
 	.WithUnitIdentifier(1)
     .WithServer("127.0.0.1", 502)
@@ -33,9 +35,9 @@ var inputRegistersAsFloat = inputRegisters.GetRegisterBytes().ReadAsFloat().Firs
 
 ```
 
-## Server
+### Server
 
-```
+```csharp
 using var modbusServer = new ModbusTcpServerBuilder()
 	.WithUnitIdentifier(1)
     .WithMaxServerConnections(1)
@@ -50,6 +52,44 @@ await modbusServer.StartAsync();
 await modbusServer.StopAsync();
 ```
 
-# Future features
+## Modbus RTU
 
-Support for Modbus RTU and other FCs might get added later...
+### Client
+
+```csharp
+using var modbusClient = new ModbusRtuClientBuilder()
+	.WithUnitIdentifier(1)
+    .WithPortName("COM1")
+    .WithBaudRate(9600)
+    .WithParity(Parity.None)
+    .WithStopBits(StopBits.None)
+    .Build();
+
+await modbusClient.ConnectAsync();
+
+var coil = await modbusClient.ReadCoilsAsync(0x01, 1);
+
+var inputRegisters = await modbusClient.ReadInputRegistersAsync(0x01, 2);
+
+var inputRegistersAsFloat = inputRegisters.GetRegisterBytes().ReadAsFloat().First();
+
+```
+
+### Server
+
+```csharp
+using var modbusServer = new ModbusRtuServerBuilder()
+	.WithUnitIdentifier(1)
+    .WithPortName("COM1")
+    .WithBaudRate(9600)
+    .WithParity(Parity.None)
+    .WithStopBits(StopBits.None)
+    .WithServerData(/*Server-Data-Implementation*/)
+    .Build();
+
+await modbusServer.StartAsync();
+
+//Do something
+
+await modbusServer.StopAsync();
+```

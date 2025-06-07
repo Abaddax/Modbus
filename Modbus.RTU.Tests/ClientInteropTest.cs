@@ -28,7 +28,7 @@ namespace Abaddax.Modbus.RTU.Tests
         public async Task ShouldReadCoils()
         {
             using var modbusClient = new ModbusRtuClientBuilder()
-                .WithSerialPort(SerialPortMock.CLIENT_PORT)
+                .WithPortName(SerialPortMock.CLIENT_PORT)
                 .Build();
 
             await modbusClient.ConnectAsync();
@@ -52,7 +52,7 @@ namespace Abaddax.Modbus.RTU.Tests
         public async Task ShouldReadDiscreteInputs()
         {
             using var modbusClient = new ModbusRtuClientBuilder()
-                .WithSerialPort(SerialPortMock.CLIENT_PORT)
+                .WithPortName(SerialPortMock.CLIENT_PORT)
                 .Build();
 
             await modbusClient.ConnectAsync();
@@ -76,7 +76,7 @@ namespace Abaddax.Modbus.RTU.Tests
         public async Task ShouldReadHoldingRegisters()
         {
             using var modbusClient = new ModbusRtuClientBuilder()
-                .WithSerialPort(SerialPortMock.CLIENT_PORT)
+                .WithPortName(SerialPortMock.CLIENT_PORT)
                 .Build();
 
             await modbusClient.ConnectAsync();
@@ -104,7 +104,7 @@ namespace Abaddax.Modbus.RTU.Tests
         public async Task ShouldReadInputRegisters()
         {
             using var modbusClient = new ModbusRtuClientBuilder()
-                .WithSerialPort(SerialPortMock.CLIENT_PORT)
+                .WithPortName(SerialPortMock.CLIENT_PORT)
                 .Build();
 
             await modbusClient.ConnectAsync();
@@ -133,7 +133,7 @@ namespace Abaddax.Modbus.RTU.Tests
         public async Task ShouldWriteSingleCoil()
         {
             using var modbusClient = new ModbusRtuClientBuilder()
-                .WithSerialPort(SerialPortMock.CLIENT_PORT)
+                .WithPortName(SerialPortMock.CLIENT_PORT)
                 .Build();
 
             await modbusClient.ConnectAsync();
@@ -150,7 +150,7 @@ namespace Abaddax.Modbus.RTU.Tests
         public async Task ShouldWriteSingleRegister()
         {
             using var modbusClient = new ModbusRtuClientBuilder()
-                .WithSerialPort(SerialPortMock.CLIENT_PORT)
+                .WithPortName(SerialPortMock.CLIENT_PORT)
                 .Build();
 
             await modbusClient.ConnectAsync();
@@ -165,7 +165,7 @@ namespace Abaddax.Modbus.RTU.Tests
         public async Task ShouldWriteMultipleCoils()
         {
             using var modbusClient = new ModbusRtuClientBuilder()
-                .WithSerialPort(SerialPortMock.CLIENT_PORT)
+                .WithPortName(SerialPortMock.CLIENT_PORT)
                 .Build();
 
             await modbusClient.ConnectAsync();
@@ -183,7 +183,7 @@ namespace Abaddax.Modbus.RTU.Tests
         public async Task ShouldWriteMultipleRegisters()
         {
             using var modbusClient = new ModbusRtuClientBuilder()
-                .WithSerialPort(SerialPortMock.CLIENT_PORT)
+                .WithPortName(SerialPortMock.CLIENT_PORT)
                 .Build();
 
             await modbusClient.ConnectAsync();

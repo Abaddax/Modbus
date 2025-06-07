@@ -29,6 +29,15 @@ namespace Abaddax.Modbus.TCP
             };
             return this;
         }
+        public ModbusTcpClientBuilder WithServerClient(TcpClient client)
+        {
+            ArgumentNullException.ThrowIfNull(client);
+            _connectFunc = () =>
+            {
+                return client.GetStream();
+            };
+            return this;
+        }
 
         public override ModbusClient<ModbusTcpProtocol> Build()
         {
