@@ -1,4 +1,5 @@
-﻿using Abaddax.Utilities.IO;
+﻿sing Abaddax.Utilities.IO;
+using Abaddax.Utilities.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.IO.Ports;
 using System.Net;
@@ -82,29 +83,51 @@ namespace Abaddax.Modbus.RTU.Tests.Helper
         public new void Open()
         {
             const int port = 25000;
-            _stream?.Dispose();
-            switch (_serialPort.PortName)
+            using (var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10)))
             {
-                case SERVER_PORT:
-                    {
-                        //Open Listener and accept client
-                        using var listener = new TcpListener(IPAddress.Loopback, port);
-                        listener.Start();
-                        var client = listener.AcceptTcpClient();
-                        _stream = new ListenStream(client.GetStream());
-                    }
-                    break;
-                case CLIENT_PORT:
-                    {
-                        var client = new TcpClient("127.0.0.1", port);
-                        _stream = new ListenStream(client.GetStream());
-                    }
-                    break;
-                default:
-                    throw new Exception($"Unknown PortName {_serialPort.PortName}");
-            }
+                _stream?.Dispose();
+                switch (_serialPort.PortName)
+                {
+                    case SERVER_PORT:
+                        {
+                            //Open Listener and accept client
+                            using var listener = new TcpListener(IPAddress.Loopback, port);
+                            listener.Start();
+                            while (!listener.Pending())
+                            {
+                                tokenSource.Token.ThrowIfCancellationRequested();
+                                Thread.Sleep(10);
+                            }
+                            var client = listener.AcceptTcpClientAsync(tokenSource.Token).AsTask().AwaitSync();
+                            _stream = new ListenStream(client.GetStream());
+                        }
+                        break;
+                    case CLIENT_PORT:
+                        {
+                            while (true)
+                            {
+                                try
+                                {
+                                    var client = new TcpClient();
+                                    client.ConnectAsync("127.0.0.1", port).AwaitSync();
+                                    _stream = new ListenStream(client.GetStream());
+                                    break;
+                                }
+                                catch (Exception ex)
+                                {
+                                    if (tokenSource.Token.IsCancellationRequested)
+                                        throw;
+                                    Thread.Sleep(10);
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        throw new Exception($"Unknown PortName {_serialPort.PortName}");
+                }
 
-            _stream.StartListening(OnMessageReceivedHandler);
+                _stream.StartListening(OnMessageReceivedHandler);
+            }
         }
         public new int Read(byte[] buffer, int offset, int count)
         {
