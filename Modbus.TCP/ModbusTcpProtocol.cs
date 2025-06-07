@@ -29,7 +29,8 @@ namespace Abaddax.Modbus.TCP
                 currentTransactionId = null;
             if (currentId == Guid.Empty)
                 currentId = null;
-            while (true)
+            int retries = 0;
+            while (retries++ < 10)
             {
                 transactionId = currentTransactionId ?? (ushort)Random.Shared.Next(0, ushort.MaxValue);
                 id = currentId ?? Guid.NewGuid();
@@ -39,6 +40,7 @@ namespace Abaddax.Modbus.TCP
                         return;
                 }
             }
+            throw new Exception("Failed to generate transactionId");
         }
 
         private async Task OnModbusMessageReceived(Exception? readException, ReadOnlyMemory<byte> message, CancellationToken token)

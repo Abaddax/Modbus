@@ -38,6 +38,7 @@ namespace Abaddax.Modbus.Protocol
 
             do
             {
+                token.ThrowIfCancellationRequested();
                 request.ID = Guid.NewGuid();
             }
             while (!_receivedPDUs.TryAdd(request.ID, null));

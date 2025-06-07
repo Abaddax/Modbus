@@ -43,7 +43,7 @@ namespace Abaddax.Modbus.TCP
 
             return new ModbusTcpServerHost(_listener, ServerData, UnitIdentifier)
             {
-                MaxServerConnection = MaxServerConnections
+                MaxServerConnections = MaxServerConnections
             };
         }
 

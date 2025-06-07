@@ -10,7 +10,7 @@ namespace Abaddax.Modbus.Protocol
         private bool disposedValue;
 
         protected CancellationToken CancellationToken => _tokenSource?.Token ?? new CancellationToken(true);
-        public int MaxServerConnection { get; set; } = -1;
+        public int MaxServerConnections { get; init; } = -1;
         public IEnumerable<ModbusServer<TModbusProtocol>> Connections
         {
             get
@@ -28,7 +28,7 @@ namespace Abaddax.Modbus.Protocol
 
                 //Just in case
                 if (token.IsCancellationRequested ||
-                    (MaxServerConnection >= 0 && _servers.Count >= MaxServerConnection))
+                    (MaxServerConnections >= 0 && _servers.Count >= MaxServerConnections))
                 {
                     server.Dispose();
                     return;
@@ -56,7 +56,7 @@ namespace Abaddax.Modbus.Protocol
             }
         }
 
-        public virtual async Task StartAsync()
+        public virtual async Task StartAsync(CancellationToken token = default)
         {
             if (_tokenSource != null && !_tokenSource.IsCancellationRequested)
                 throw new InvalidOperationException("Already started");
@@ -64,7 +64,7 @@ namespace Abaddax.Modbus.Protocol
             _tokenSource?.Dispose();
             _tokenSource = new CancellationTokenSource();
         }
-        public virtual async Task StopAsync()
+        public virtual async Task StopAsync(CancellationToken token = default)
         {
             if (_tokenSource == null)
                 return;

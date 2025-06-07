@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Abaddax.$(MSBuildProjectName)</RootNamespace>
+        <AssemblyName>Abaddax.$(MSBuildProjectName)</AssemblyName>
+        <PackageId>Abaddax.$(MSBuildProjectName)</PackageId>
+        <Version>0.1.0</Version>
+        <Description>Simple Modbus-RTU-Client/Server written in C#</Description>
+        <Authors>Abaddax</Authors>
+        <Company></Company>
+        <Copyright>Abaddax</Copyright>
+        <RepositoryUrl>https://github.com/Abaddax/Modbus</RepositoryUrl>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseUrl>$(RepositoryUrl)/blob/master/LICENSE</PackageLicenseUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <IncludeSource>true</IncludeSource>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.Ports" Version="9.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Modbus.Protocol\Modbus.Protocol.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>Abaddax.Modbus.RTU.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+</Project>

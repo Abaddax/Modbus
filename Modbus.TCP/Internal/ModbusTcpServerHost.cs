@@ -40,18 +40,18 @@ namespace Abaddax.Modbus.TCP.Internal
             _unitIdentifier = unitIdentifier;
         }
 
-        public override async Task StartAsync()
+        public override async Task StartAsync(CancellationToken token = default)
         {
-            await base.StartAsync();
+            await base.StartAsync(token);
 
             _listener.Start();
             //Run in background
             _ = _listener.AcceptTcpClientsAsync(OnClientConnected, CancellationToken);
         }
-        public override async Task StopAsync()
+        public override async Task StopAsync(CancellationToken token = default)
         {
             _listener.Stop();
-            await base.StopAsync();
+            await base.StopAsync(token);
         }
         protected override void Dispose(bool disposing)
         {
