@@ -1,3 +1,5 @@
+[![CI](https://github.com/Abaddax/Modbus/actions/workflows/ci.yml/badge.svg)](https://github.com/Abaddax/Modbus/actions/workflows/ci.yml)
+
 # Modbus TCP/RTU Client/Server 
 
 A basic implementation of Modbus TCP/RTU client/server library written in C#.
@@ -21,7 +23,7 @@ A basic implementation of Modbus TCP/RTU client/server library written in C#.
 
 ```csharp
 using var modbusClient = new ModbusTcpClientBuilder()
-	.WithUnitIdentifier(1)
+    .WithUnitIdentifier(1)
     .WithServer("127.0.0.1", 502)
     .Build();
 
@@ -39,7 +41,7 @@ var inputRegistersAsFloat = inputRegisters.GetRegisterBytes().ReadAsFloat().Firs
 
 ```csharp
 using var modbusServer = new ModbusTcpServerBuilder()
-	.WithUnitIdentifier(1)
+    .WithUnitIdentifier(1)
     .WithMaxServerConnections(1)
     .WithEndpoint(IPAddress.Loopback, 502)
     .WithServerData(/*Server-Data-Implementation*/)
@@ -58,7 +60,7 @@ await modbusServer.StopAsync();
 
 ```csharp
 using var modbusClient = new ModbusRtuClientBuilder()
-	.WithUnitIdentifier(1)
+    .WithUnitIdentifier(1)
     .WithPortName("COM1")
     .WithBaudRate(9600)
     .WithParity(Parity.None)
@@ -79,7 +81,7 @@ var inputRegistersAsFloat = inputRegisters.GetRegisterBytes().ReadAsFloat().Firs
 
 ```csharp
 using var modbusServer = new ModbusRtuServerBuilder()
-	.WithUnitIdentifier(1)
+    .WithUnitIdentifier(1)
     .WithPortName("COM1")
     .WithBaudRate(9600)
     .WithParity(Parity.None)
