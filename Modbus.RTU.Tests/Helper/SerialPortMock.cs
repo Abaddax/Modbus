@@ -25,17 +25,23 @@ namespace Abaddax.Modbus.RTU.Tests.Helper
             var evnt = spType.GetField("_dataReceived", BindingFlags.Instance | BindingFlags.NonPublic);
             var evntValue = evnt?.GetValue(_serialPort);
             var eventDelegate = evntValue as SerialDataReceivedEventHandler;
+            if (eventDelegate == null)
+                Console.WriteLine("SerialDataReceivedEventHandler is null!");
 
             var evntArgsType = typeof(SerialDataReceivedEventArgs);
             var ctor = evntArgsType.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, [typeof(SerialData)]);
             var args = ctor?.Invoke([SerialData.Chars]) as SerialDataReceivedEventArgs;
+            if (args == null)
+                Console.WriteLine("SerialDataReceivedEventArgs are null!");
+
             eventDelegate?.Invoke(_serialPort, args);
         }
         private async Task OnMessageReceivedHandler(Exception? readException, ReadOnlyMemory<byte> message, CancellationToken token)
         {
             if (readException != null)
             {
-                //TODO
+                Console.WriteLine(readException);
+                Close();
                 return;
             }
             var span = message.Span;
