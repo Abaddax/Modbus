@@ -1,4 +1,4 @@
-u﻿sing Abaddax.Utilities.IO;
+using Abaddax.Utilities.IO;
 using Abaddax.Utilities.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.IO.Ports;
