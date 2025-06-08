@@ -4,6 +4,7 @@ using Abaddax.Modbus.RTU.Tests.Helper;
 
 namespace Abaddax.Modbus.RTU.Tests
 {
+    [NonParallelizable]
     public class ClientServerTests
     {
         [SetUp]

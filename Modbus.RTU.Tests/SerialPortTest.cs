@@ -3,6 +3,7 @@ using System.IO.Ports;
 
 namespace Abaddax.Modbus.RTU.Tests
 {
+    [NonParallelizable]
     public class SerialPortTest
     {
         [SetUp]

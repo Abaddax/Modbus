@@ -2,6 +2,7 @@
 
 namespace Abaddax.Modbus.RTU.Tests
 {
+    [NonParallelizable]
     public class ClientInteropTest
     {
         EasyModbus.ModbusServer _server;

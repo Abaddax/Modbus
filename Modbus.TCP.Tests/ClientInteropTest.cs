@@ -1,5 +1,6 @@
 ﻿namespace Abaddax.Modbus.TCP.Tests
 {
+    [NonParallelizable]
     public class ClientInteropTest
     {
         const int _port = 10502;

@@ -5,6 +5,7 @@ using System.Net.Sockets;
 
 namespace Abaddax.Modbus.TCP.Tests
 {
+    [NonParallelizable]
     public class ClientServerTests
     {
         const int _port = 10502;
